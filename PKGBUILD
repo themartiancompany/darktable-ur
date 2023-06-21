@@ -7,8 +7,8 @@
 
 pkgname=darktable
 epoch=2
-pkgver=4.2.1
-pkgrel=7
+pkgver=4.4.0
+pkgrel=1
 pkgdesc="Utility to organize and develop raw images"
 arch=(x86_64)
 url="https://darktable.org"
@@ -23,18 +23,11 @@ optdepends=('dcraw: base curve script'
             'portmidi: game and midi controller input devices'
             'gnuplot: noise profile script')
 makedepends=(cmake intltool desktop-file-utils llvm clang portmidi python-jsonschema libwebp)
-source=("https://github.com/darktable-org/darktable/releases/download/release-${pkgver}/darktable-${pkgver}.tar.xz"{,.asc}
-         exiv2-0.28.patch)
-sha256sums=('603a39c6074291a601f7feb16ebb453fd0c5b02a6f5d3c7ab6db612eadc97bac'
-            'SKIP'
-            'cad8d6478f05a2ba0d197a77f8131648c81b7ac58ea528828a662275d81e576c')
+source=("https://github.com/darktable-org/darktable/releases/download/release-${pkgver}/darktable-${pkgver}.tar.xz"{,.asc})
+sha256sums=('8887fc34abd97c4998b0888c3197e0c509d63bdeab2238906915319811f3b080'
+            'SKIP')
 validpgpkeys=(C4CBC150699956E2A3268EF5BB5CC8295B1779C9  # darktable releases <release@darktable.org>
               F10F9686652B0E949FCD94C318DCA123F949BD3B) # Pascal Obry <pascal@obry.net>
-
-prepare() {
-# Fix build with exiv2 0.28
-  patch -d $pkgname-$pkgver -p1 < exiv2-0.28.patch
-}
 
 build() {
     cmake -B build -S ${pkgname}-${pkgver} \
