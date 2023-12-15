@@ -8,7 +8,7 @@
 pkgname=darktable
 epoch=2
 pkgver=4.4.2
-pkgrel=3
+pkgrel=4
 pkgdesc="Utility to organize and develop raw images"
 arch=(x86_64)
 url="https://darktable.org"
@@ -24,15 +24,18 @@ optdepends=('dcraw: base curve script'
             'gnuplot: noise profile script')
 makedepends=(cmake intltool desktop-file-utils llvm clang portmidi python-jsonschema libwebp)
 source=("https://github.com/darktable-org/darktable/releases/download/release-${pkgver}/darktable-${pkgver}.tar.xz"{,.asc}
-         libavif-1.patch)
+         libavif-1.patch
+         https://github.com/darktable-org/rawspeed/commit/f57725c1.patch)
 sha256sums=('c11d28434fdf2e9ce572b9b1f9bc4e64dcebf6148e25080b4c32eb51916cfa98'
             'SKIP'
-            'b9fe2cf3a2adadbd4b05ce0002b0a812cf5f5894d964d4b61602304811d4d601')
+            'b9fe2cf3a2adadbd4b05ce0002b0a812cf5f5894d964d4b61602304811d4d601'
+            '2d6abf320a7792eb39ed60ac7e8290dcee38ec064c3f1d151a62ffc7e7427a6b')
 validpgpkeys=(C4CBC150699956E2A3268EF5BB5CC8295B1779C9  # darktable releases <release@darktable.org>
               F10F9686652B0E949FCD94C318DCA123F949BD3B) # Pascal Obry <pascal@obry.net>
 
 prepare() {
     patch -d ${pkgname}-${pkgver} -p1 < libavif-1.patch # Fix build with libavif 1.x
+    patch -d ${pkgname}-${pkgver}/src/external/rawspeed -p1 < f57725c1.patch # Fix build with libxml2 2.12
 }
 
 build() {
