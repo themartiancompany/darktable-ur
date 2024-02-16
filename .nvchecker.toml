@@ -3,5 +3,7 @@ source = "github"
 github = "darktable-org/darktable"
 prefix = "release-"
 use_max_tag = true
-ignored = "release0.4 0.4 0.3 release-3.7.0"
-exclude_regex = ".*(rc).*"
+# ignore old tag schemes, rcs, etc by only including release tag scheme
+include_regex = "release-\\d+\\.\\d+\\.\\d+"
+# Y=odd Z=0 are dev series, not stable
+exclude_regex = "release-\\d+\\.\\d*[13579]\\.0"
